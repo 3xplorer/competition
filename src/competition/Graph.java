@@ -32,6 +32,14 @@ public class Graph {
 		return startGoal;
 	}
 
+	public void addStartGoal(int value) {
+
+		if (startGoal == null) {
+			startGoal = new ArrayList<>();
+		}
+		startGoal.add(new Node(value));
+	}
+
 	public void addNode(int key) {
 
 		if (graph.get(key) == null) {

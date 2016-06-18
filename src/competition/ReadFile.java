@@ -16,7 +16,6 @@ public class ReadFile {
 	void read(Graph g) {
 
 		String file = "src/competition/graph59a.txt";
-		ArrayList<Node> startGoal = new ArrayList<>();
 		ArrayList<Integer> concats = new ArrayList<>();
 		int c, value = 0, key = 0;
 		boolean firstLine = true;
@@ -42,10 +41,10 @@ public class ReadFile {
 
 							if (firstChar) {
 
-								startGoal.add(new Node(value));
+								g.addStartGoal(value);
 								firstChar = false;
 							} else {
-								startGoal.add(new Node(value));
+								g.addStartGoal(value);
 								firstChar = true;
 								firstLine = false;
 							}
