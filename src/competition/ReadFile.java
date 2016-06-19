@@ -28,12 +28,12 @@ public class ReadFile {
 
 			while ((c = br.read()) != EOF) {
 
-				if ((c != SP) && (c != EOL) && (c != CR)) {
+				if (isDigit(c)) {
 
 					concats.add(Character.getNumericValue(c));
 				} else {
 
-					if (concats.size() != 0) {
+					if (!isEmpty(concats)) {
 
 						value = concatenate(concats);
 
@@ -82,13 +82,24 @@ public class ReadFile {
 			e.printStackTrace();
 		}
 
-		if (firstChar) {
-			key = concatenate(concats);
-			g.addNode(key);
-		} else {
-			value = concatenate(concats);
-			g.addNeighbor(key, value);
+		if (!isEmpty(concats)) {
+
+			if (firstChar) {
+				key = concatenate(concats);
+				g.addNode(key);
+			} else {
+				value = concatenate(concats);
+				g.addNeighbor(key, value);
+			}
 		}
+	}
+
+	private boolean isEmpty(ArrayList<Integer> concats) {
+		return concats.size() == 0;
+	}
+
+	private boolean isDigit(int c) {
+		return (c != SP) && (c != EOL) && (c != CR);
 	}
 
 	private boolean isNewLine(int c) {

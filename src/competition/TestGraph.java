@@ -9,5 +9,10 @@ public class TestGraph {
 		ReadFile r = new ReadFile();
 		r.read(g);
 		System.out.println(g.toString());
+
+		g.createOmnidirectedGraph();
+
+		System.out.println();
+		System.out.println(g.toString());
 	}
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 public class Graph {
 
 	private HashMap<Integer, ArrayList<Node>> graph;
+	private ArrayList<Node> nodes;
 	private ArrayList<Node> startGoal;
 
 	public Graph() {
@@ -22,9 +23,14 @@ public class Graph {
 		return graph;
 	}
 
-	public ArrayList<Node> getNodes(int index) {
+	public ArrayList<Node> getNode(int index) {
 
 		return graph.get(index);
+	}
+
+	public ArrayList<Node> getNodes() {
+
+		return nodes;
 	}
 
 	public ArrayList<Node> getStartGoal() {
@@ -74,5 +80,37 @@ public class Graph {
 		}
 
 		return s;
+	}
+
+	public void createOmnidirectedGraph() {
+
+		for (Map.Entry<Integer, ArrayList<Node>> nodes : graph.entrySet()) {
+
+			int value = nodes.getKey();
+
+			for (Node node : nodes.getValue()) {
+
+				int index = node.getValue();
+				ArrayList<Node> currentNode = getNode(index);
+
+				if (hasNode(currentNode, value)) {
+					continue;
+				} else {
+					addNeighbor(index, value);
+				}
+			}
+		}
+	}
+
+	private boolean hasNode(ArrayList<Node> node, int value) {
+
+		for (Node currentNode : node) {
+
+			if (currentNode.getValue() == value) {
+
+				return true;
+			}
+		}
+		return false;
 	}
 }
