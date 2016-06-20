@@ -48,21 +48,20 @@ public class Graph {
 
 	public void addNode(int key) {
 
-		if (graph.get(key) == null) {
-
+		if (graph.containsKey(key)) {
+			return;
+		} else {
 			graph.put(key, new ArrayList<>());
 		}
 	}
 
 	public void addNeighbor(int key, int value) {
 
-		if (graph.get(key) == null) {
-
+		if (graph.containsKey(key)) {
+			graph.get(key).add(new Node(value));
+		} else {
 			addNode(key);
 		}
-
-		ArrayList<Node> nodes = graph.get(key);
-		nodes.add(new Node(value));
 	}
 
 	public String toString() {
@@ -86,17 +85,17 @@ public class Graph {
 
 		for (Map.Entry<Integer, ArrayList<Node>> nodes : graph.entrySet()) {
 
-			int value = nodes.getKey();
+			int key = nodes.getKey();
 
 			for (Node node : nodes.getValue()) {
 
 				int index = node.getValue();
 				ArrayList<Node> currentNode = getNode(index);
 
-				if (hasNode(currentNode, value)) {
+				if (hasNode(currentNode, key)) {
 					continue;
 				} else {
-					addNeighbor(index, value);
+					addNeighbor(index, key);
 				}
 			}
 		}
