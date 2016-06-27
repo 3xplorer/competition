@@ -1,23 +1,16 @@
 package competition;
 
-public class Node implements Comparable<Node> {
+public class DFSItem {
 
-	private int value;
 	private int status;
-	private int distance; 
+	private int distance;
 	private Node pred;
-
-	public Node(int value) {
-
-		this.value = value;
-		setStatus(-1);
-		setDistance(0);
-		setPred(null);
-	}
-
-	public int getValue() {
-
-		return value;
+	
+	public DFSItem(int status, int distance, Node predecessor) {
+	
+		this.status = status;
+		this.distance = distance;
+		this.pred = predecessor;
 	}
 
 	public int getStatus() {
@@ -43,9 +36,6 @@ public class Node implements Comparable<Node> {
 	public void setPred(Node pred) {
 		this.pred = pred;
 	}
-
-	public int compareTo(Node node) {
-
-		return this.getValue() - node.getValue();
-	}
+	
+	
 }
