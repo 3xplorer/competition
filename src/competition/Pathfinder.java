@@ -1,7 +1,6 @@
 package competition;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Pathfinder {
 
@@ -9,33 +8,32 @@ public class Pathfinder {
 	public final static int GREY = 1;
 	public final static int BLACK = 2;
 	private static final Graph g = new Graph();
-	ArrayList<Node[]> pathList = new ArrayList<>();
+	private static ArrayList<ArrayList<Node>> pathList = new ArrayList<>();
+	private static ArrayList<Node> path = new ArrayList<>();
+	private static int PathCounter = 0;
 
-	public int findPath() {
+	public void findPath() {
 
-		int pathCounter = 0;
-
-		Node[] path = new Node[g.getDistance()];
 		Node startNode = g.getStartGoal().get(0);
-		path[0] = startNode;
-
 		ArrayList<Node> start = g.getNode(startNode.getValue());
-		path[0] = startNode;
+
+		path.add(startNode);
 
 		for (Node node : start) {
 
-			path[1] = node;
+			path.add(node);
 
 			if (node.getStatus() == WHITE) {
 				node.setPred(startNode);
-				DFSVisit(node, path);
+				DFSVisit(node);
 			}
+			resetPath();
 		}
-
-		return pathCounter;
+		
+		System.out.println(PathCounter);
 	}
 
-	private void DFSVisit(Node node, Node[] path) {
+	private void DFSVisit(Node node) {
 
 		node.setStatus(GREY);
 		node.setDistance(node.getPred().getDistance() + 1);
@@ -45,27 +43,42 @@ public class Pathfinder {
 			if (nextNode.getStatus() == WHITE) {
 
 				nextNode.setPred(node);
-				DFSVisit(nextNode, path);
+				if (isHamiltonPath(nextNode)) {
+
+					pathList.add(path);
+					PathCounter++;
+					removeLastNode();
+				} else {
+
+				}
+				DFSVisit(nextNode);
 			}
 		}
 		node.setStatus(BLACK);
 		node.setDistance(node.getPred().getDistance() + 1);
 	}
 
-	private boolean hasUnvisitedNodes(Node currentNode) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	private boolean isHamiltonPath(Node nextNode, Node[] path) {
+	private boolean isHamiltonPath(Node nextNode) {
 
 		Node targetNode = g.getStartGoal().get(1);
 
-		if (nextNode.equals(targetNode) && path.length == g.getDistance()) {
+		if (nextNode.equals(targetNode) && path.size() == g.getDistance()) {
 
 			return true;
 		}
 		return false;
+	}
+
+	private static void removeLastNode() {
+
+		path.remove(path.size() - 1);
+	}
+
+	private static void resetPath() {
+
+		path.clear();
+		Node startNode = g.getStartGoal().get(0);
+		path.add(startNode);
 	}
 
 }
