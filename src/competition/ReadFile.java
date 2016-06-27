@@ -53,11 +53,13 @@ public class ReadFile {
 							if (firstChar) {
 
 								key = value;
+								g.addNodesToList(value);
 								g.addNode(key);
 								firstChar = false;
 							} else {
 
 								g.addNeighbor(key, value);
+
 							}
 							if (isNewLine(c)) {
 
@@ -92,6 +94,7 @@ public class ReadFile {
 				g.addNeighbor(key, value);
 			}
 		}
+		g.setDistance(g.getGraph().size());
 	}
 
 	private boolean isEmpty(ArrayList<Integer> concats) {
